@@ -1,0 +1,34 @@
+// AUTOMATICALLY GENERATED FILE. PLEASE DO NOT MODIFY IT MANUALLY
+
+// PIO Unified Debugger
+//
+// Documentation: https://docs.platformio.org/page/plus/debugging.html
+// Configuration: https://docs.platformio.org/page/projectconf/section_env_debug.html
+
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "platformio-debug",
+            "request": "launch",
+            "name": "PIO Debug",
+            "executable": "C:/Users/marck/_Stuff/Repositories/Arduino/DS18B20Example/.pio/build/ElegooUnoR3/firmware.elf",
+            "projectEnvName": "ElegooUnoR3",
+            "toolchainBinDir": "C:/Users/marck/.platformio/packages/toolchain-atmelavr@1.50400.190710/bin",
+            "preLaunchTask": {
+                "type": "PlatformIO",
+                "task": "Pre-Debug (ElegooUnoR3)"
+            },
+            "internalConsoleOptions": "openOnSessionStart"
+        },
+        {
+            "type": "platformio-debug",
+            "request": "launch",
+            "name": "PIO Debug (skip Pre-Debug)",
+            "executable": "C:/Users/marck/_Stuff/Repositories/Arduino/DS18B20Example/.pio/build/ElegooUnoR3/firmware.elf",
+            "projectEnvName": "ElegooUnoR3",
+            "toolchainBinDir": "C:/Users/marck/.platformio/packages/toolchain-atmelavr@1.50400.190710/bin",
+            "internalConsoleOptions": "openOnSessionStart"
+        }
+    ]
+}
