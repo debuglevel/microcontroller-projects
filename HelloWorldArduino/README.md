@@ -26,6 +26,9 @@ d1             Platform  uploadfsota  Upload Filesystem Image OTA
 ## Compile and upload
 `platformio run --target=upload` will compile and upload it.
 
+If more than one environment is defined in `platformio.ini`, you should use `--environment wemos_d1` or `--environment arduino_nano_3`
+to define which board is plugged in. For mere compilation (`pio run`), this is not needed - all environments will be built.
+
 ## Monitor Serial
 `sudo chmod 666 /dev/ttyUSB0` might be needed if you did not install the `udev` rules <https://docs.platformio.org/en/latest/faq.html#platformio-udev-rules>.
 

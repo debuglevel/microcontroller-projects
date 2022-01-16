@@ -9,7 +9,7 @@
 // Declare functions below cecause C++ is annoying.
 void computePi();
 
-uint counter = 0;
+uint32_t counter = 0;
 
 void setup()
 {
@@ -31,7 +31,7 @@ void loop()
   counter += 1;
 
 // some silly calculation
-//  computePi();
+  computePi();
 }
 
 
@@ -44,9 +44,10 @@ void computePi() {
 
  // NB: use uintXX_t instead of int, long et cetera, because their length varies depending of the platform.
  uint32_t iterations;
- //iterations = 4294967295;
- //iterations = 1000000; // 1 million takes about 35,566 seconds on ESP8266 of the wemos d1 board. (28117 per second)
- iterations = 28117*0.2;
+
+ // wemos d1         @ ESP8266:    28117 per second
+ // Arduino nano 3.0 @ ATmega328P:  5623 per second
+ iterations = 28117*1;
 
  Serial.print("PI | Using iterations = ");
  Serial.println(iterations);
