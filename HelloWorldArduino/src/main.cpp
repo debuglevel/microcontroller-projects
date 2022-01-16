@@ -46,8 +46,7 @@ void computePi() {
  double x, y, z, pi;
 
  // TODO: not sure how big an int here is.
- // TODO: seems to crash on later loop calls if too big. no idea why.
- iterations = 52000;
+ iterations = 60000;
 
  Serial.print("PI | Using iterations = ");
  Serial.println(iterations);
@@ -56,28 +55,23 @@ void computePi() {
 
  Serial.print("PI | Doing calculation rounds... ");
  for(i = 0; i < iterations; ++i) {
-     //Serial.print("1..");
      x = (double)rand() / RAND_MAX;
-     //Serial.print("2..");
      y = (double)rand() / RAND_MAX;
-     //Serial.print("3..");
      z = x*x + y*y;
-     //Serial.print("4..");
 
      if (z <= 1) {
-       //Serial.print("5..");
        count++;
      }
-     //Serial.print("6..");
+
+     yield();
  }
  Serial.println("done");
 
  Serial.print("PI | Final calculation... ");
- pi = (double) count / iterations * 4;
- //pi = (double)((count/iterations)*4);
+ pi = (double)count / iterations * 4;
  Serial.print("done: ");
 
- Serial.println(pi);
+ Serial.println(pi, 6);
 
  Serial.println("PI | Computed pi...");
 }
