@@ -1,5 +1,7 @@
 #include <Arduino.h>
 
+uint counter = 0;
+
 void setup()
 {
   // put your setup code here, to run once:
@@ -8,10 +10,14 @@ void setup()
   Serial.begin(74880);
 }
 
+
 void loop()
 {
   // put your main code here, to run repeatedly:
 
-  Serial.println("Hello World");
+  Serial.print("Hello World! Seconds since last reset: ");
+  Serial.println(counter);
+
   delay(1000);
+  counter += 1;
 }
