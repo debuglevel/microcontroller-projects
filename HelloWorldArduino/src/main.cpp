@@ -42,19 +42,20 @@ void computePi() {
  Serial.println(SEED);
  srand(SEED); // uses uptime seconds (integer) as seed
 
- uint iterations, i, count;
- double x, y, z, pi;
-
- // TODO: not sure how big an int here is.
- iterations = 60000;
+ // NB: use uintXX_t instead of int, long et cetera, because their length varies depending of the platform.
+ uint32_t iterations;
+ //iterations = 4294967295;
+ //iterations = 1000000; // 1 million takes about 35,566 seconds on ESP8266 of the wemos d1 board. (28117 per second)
+ iterations = 28117*0.2;
 
  Serial.print("PI | Using iterations = ");
  Serial.println(iterations);
 
- count = 0;
-
  Serial.print("PI | Doing calculation rounds... ");
- for(i = 0; i < iterations; ++i) {
+ uint32_t iteration;
+ uint32_t count = 0;
+ double x, y, z;
+ for(iteration = 0; iteration < iterations; ++iteration) {
      x = (double)rand() / RAND_MAX;
      y = (double)rand() / RAND_MAX;
      z = x*x + y*y;
@@ -68,10 +69,11 @@ void computePi() {
  Serial.println("done");
 
  Serial.print("PI | Final calculation... ");
+ double pi;
  pi = (double)count / iterations * 4;
  Serial.print("done: ");
 
- Serial.println(pi, 6);
+ Serial.println(pi, 10);
 
  Serial.println("PI | Computed pi...");
 }
