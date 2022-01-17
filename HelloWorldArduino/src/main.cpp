@@ -9,7 +9,7 @@
 #include "misc.h"
 #include "config.h"
 
-uint32_t counter = 0;
+uint32_t counter = 1;
 
 /**
  * Runs once on microcontroller reset.
@@ -36,17 +36,17 @@ void setup() {
  * Runs repeatedly.
  */
 void loop() {
-    Serial.println("Main.Loop | Entering main loop...");
+    Serial.printf("Main.Loop | Entering main loop, iteration %u...\n", counter);
 
-    Serial.print("Hello World! Loops since last reset: ");
-    Serial.println(counter);
-
-    delay(1000);
-    counter += 1;
+//    Serial.print("Hello World!");
 
     // some silly calculation
     //computePi();
 
-    Serial.println("Main.Loop | Main loop finished");
+    Serial.printf("Main.Loop | Delaying for %ums...\n", MAIN_LOOP_DELAY);
+    delay(MAIN_LOOP_DELAY);
+
+    Serial.printf("Main.Loop | Main loop finished, iteration %u...\n", counter);
+    counter += 1;
 }
 
