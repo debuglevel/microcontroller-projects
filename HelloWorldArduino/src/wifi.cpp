@@ -50,14 +50,17 @@ void wifi_list() {
     }
 }
 
+/**
+ * Checks the internet connection by issuing a HTTP request.
+ * Seems to crash, though.
+ */
 void wifi_checkInternetConnection()
 {
     Serial.println("WiFi | Checking internet connection...");
     Serial.print("WiFi | Status is ");
     Serial.println(WiFi.status());
 
-    if (WiFi.status() == WL_CONNECTED)
-    {
+    if (WiFi.status() == WL_CONNECTED) {
         Serial.println("WiFi | WiFi status is connected");
 
         Serial.println("WiFi | Checking connectivity via HTTP request...");
@@ -70,13 +73,10 @@ void wifi_checkInternetConnection()
         int httpCode = httpClient.GET();
         Serial.printf("WiFi | Response on GET '%s': HTTP code %d\n", url, httpCode);
 
-        if (httpCode > 0)
-        {
+        if (httpCode > 0) {
             String payload = httpClient.getString();
             Serial.printf("WiFi | Response on GET '%s': Content: '%s'\n", url, payload.c_str());
-        }
-        else
-        {
+        } else {
             Serial.printf("WiFi | Request on GET '%s' failed\n", url);
         }
 
