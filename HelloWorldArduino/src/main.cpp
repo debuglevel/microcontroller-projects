@@ -7,6 +7,7 @@
 #include "pi.h"
 #include "wifi.h"
 #include "misc.h"
+#include "config.h"
 
 uint32_t counter = 0;
 
@@ -16,8 +17,7 @@ uint32_t counter = 0;
 void setup() {
     waitSetup();
 
-    // 74880 because bootloader (or whatever) also sends at this rate
-    Serial.begin(74880);
+    Serial.begin(BAUDRATE);
 
     Serial.println("======================================");
     Serial.println("Main.Setup | Setting up...");
