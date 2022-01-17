@@ -1,0 +1,6 @@
+#ifndef HELLOWORLDARDUINO_PI_H
+#define HELLOWORLDARDUINO_PI_H
+
+void computePi();
+
+#endif //HELLOWORLDARDUINO_PI_H
