@@ -38,15 +38,20 @@ void wifi_setup() {
     randomSeed(seed);
 }
 
+/**
+ * Scans WiFi networks and lists them
+ */
 void wifi_list() {
     Serial.println("WiFi | Scanning for networks...");
-    int networksCount = WiFi.scanNetworks(false, true, 0, NULL);
+
+    int8_t networksCount = WiFi.scanNetworks(false, true, 0, NULL);
     Serial.printf("WiFi | Found %d networks:\n", networksCount);
 
-    for (int i = 0; i < networksCount; i++) {
-        Serial.printf("WiFi | Found network with SSID='%s' \t RSSI=%i\n",
+    for (int8_t i = 0; i < networksCount; i++) {
+        Serial.printf("WiFi | Found network with SSID='%s' \t RSSI=%i Channel=%i\n",
                       WiFi.SSID(i).c_str(),
-                      WiFi.RSSI(i));
+                      WiFi.RSSI(i),
+                      WiFi.channel(i));
     }
 }
 
