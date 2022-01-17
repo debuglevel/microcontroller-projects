@@ -5,6 +5,7 @@
 #include <time.h>
 
 #include "pi.h"
+#include "wifi.h"
 
 uint32_t counter = 0;
 
@@ -16,6 +17,10 @@ void setup() {
 
     Serial.println("======================================");
     Serial.println("Main.Setup | Setting up...");
+
+    wifi_list();
+    wifi_setup();
+    //wifi_checkInternetConnection();
 
     Serial.println("Main.Setup | Setup done");
 }
