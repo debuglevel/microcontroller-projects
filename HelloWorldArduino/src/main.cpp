@@ -11,6 +11,7 @@
 #include "random.h"
 #include "ntp.h"
 #include "filedatabase.h"
+#include "mqtt.h"
 
 uint32_t counter = 1;
 
@@ -33,6 +34,8 @@ void setup() {
     //wifi_checkInternetConnection();
 
     ntp_setup();
+
+    mqtt_setup();
 
     fdb_setup();
     fdb_list("");
@@ -58,6 +61,8 @@ void loop() {
 
     Serial.println("Main.Loop | Doing maintenance...");
     periodically_write_timestamp_to_fdb();
+    mqtt_loop();
+    ntp_loop();
 
     Serial.printf("Main.Loop | Delaying for %ums...\n", MAIN_LOOP_DELAY);
     delay(MAIN_LOOP_DELAY);
