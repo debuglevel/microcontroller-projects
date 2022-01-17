@@ -1,0 +1,6 @@
+#ifndef HELLOWORLDARDUINO_MISC_H
+#define HELLOWORLDARDUINO_MISC_H
+
+void waitSetup();
+
+#endif //HELLOWORLDARDUINO_MISC_H

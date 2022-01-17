@@ -6,11 +6,14 @@
 
 #include "pi.h"
 #include "wifi.h"
+#include "misc.h"
 
 uint32_t counter = 0;
 
 void setup() {
     // put your setup code here, to run once:
+
+    waitSetup();
 
     // 74880 because bootloader (or whatever) also sends at this rate
     Serial.begin(74880);
