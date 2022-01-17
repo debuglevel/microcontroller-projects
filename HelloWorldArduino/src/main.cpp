@@ -22,6 +22,9 @@ void setup() {
     Serial.println("======================================");
     Serial.println("Main.Setup | Setting up...");
 
+    Serial.print("Main.Setup | Baud rate was already set to: ");
+    Serial.println(BAUDRATE);
+
     wifi_list();
     wifi_setup();
     //wifi_checkInternetConnection();
