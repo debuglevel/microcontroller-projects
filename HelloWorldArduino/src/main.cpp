@@ -9,6 +9,7 @@
 #include "misc.h"
 #include "config.h"
 #include "random.h"
+#include "ntp.h"
 
 uint32_t counter = 1;
 
@@ -29,6 +30,8 @@ void setup() {
     wifi_list();
     wifi_setup();
     //wifi_checkInternetConnection();
+
+    ntp_setup();
 
     set_seed_to_uptime();
 
