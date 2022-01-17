@@ -8,6 +8,7 @@
 #include "wifi.h"
 #include "misc.h"
 #include "config.h"
+#include "random.h"
 
 uint32_t counter = 1;
 
@@ -28,6 +29,8 @@ void setup() {
     wifi_list();
     wifi_setup();
     //wifi_checkInternetConnection();
+
+    set_seed_to_uptime();
 
     Serial.println("Main.Setup | Setup done");
 }

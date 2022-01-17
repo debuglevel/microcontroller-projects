@@ -1,0 +1,6 @@
+#ifndef HELLOWORLDARDUINO_RANDOM_H
+#define HELLOWORLDARDUINO_RANDOM_H
+
+void set_seed_to_uptime();
+
+#endif //HELLOWORLDARDUINO_RANDOM_H

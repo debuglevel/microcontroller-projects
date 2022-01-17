@@ -16,26 +16,21 @@ const int mqtt_port = 1883;*/
 //long lastMessageTime = 0;
 //int value = 0;
 
+/**
+ * Sets up a WiFi connection.
+ */
 void wifi_setup() {
     Serial.println("WiFi | Setting up...");
+
     Serial.printf("WiFi | Connecting to SSID '%s'...\n", wifi_ssid);
     WiFi.begin(wifi_ssid, wifi_password);
 
     while (WiFi.status() != WL_CONNECTED) {
-        int reconnectWait = 500;
-        Serial.printf("WiFi | Still not connected. Waiting for %dms...\n", reconnectWait);
-        delay(reconnectWait);
+        Serial.printf("WiFi | Still not connected. Delaying for %dms...\n", WIFI_RECONNECT_DELAY);
+        delay(WIFI_RECONNECT_DELAY);
     }
 
-    Serial.print("WiFi | Connected with IP ");
-    Serial.println(WiFi.localIP());
-
-    // TODO: no idea what this is about.
-    //  maybe use the opportunity to set a seed depending on whatever
-    //  how long the WiFi connection needed to be established?
-    unsigned long seed = micros();
-    Serial.printf("WiFi | Setting randomSeed(%lu)...\n", seed);
-    randomSeed(seed);
+    Serial.printf("WiFi | Connected with IP %s\n", WiFi.localIP().toString().c_str());
 }
 
 /**
