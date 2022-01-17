@@ -36,17 +36,21 @@ void setup() {
  * Runs repeatedly.
  */
 void loop() {
+    ulong start_time = millis();
     Serial.printf("Main.Loop | Entering main loop, iteration %u...\n", counter);
 
-//    Serial.print("Hello World!");
+
+    // Serial.print("Hello World!");
 
     // some silly calculation
     //computePi();
 
+
     Serial.printf("Main.Loop | Delaying for %ums...\n", MAIN_LOOP_DELAY);
     delay(MAIN_LOOP_DELAY);
 
-    Serial.printf("Main.Loop | Main loop finished, iteration %u...\n", counter);
+    ulong loop_time = millis() - start_time;
+    Serial.printf("Main.Loop | Main loop finished, iteration %u, took %lums...\n", counter, loop_time);
     counter += 1;
 }
 
