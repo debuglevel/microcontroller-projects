@@ -6,7 +6,7 @@
 #include <time.h>
 #define SEED time(NULL)
 
-// Declare functions below cecause C++ is annoying.
+// Declare functions below because C++ is annoying.
 void computePi();
 
 uint32_t counter = 0;
