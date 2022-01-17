@@ -10,9 +10,10 @@
 
 uint32_t counter = 0;
 
+/**
+ * Runs once on microcontroller reset.
+ */
 void setup() {
-    // put your setup code here, to run once:
-
     waitSetup();
 
     // 74880 because bootloader (or whatever) also sends at this rate
@@ -28,9 +29,10 @@ void setup() {
     Serial.println("Main.Setup | Setup done");
 }
 
-
+/**
+ * Runs repeatedly.
+ */
 void loop() {
-    // put your main code here, to run repeatedly:
     Serial.println("Main.Loop | Entering main loop...");
 
     Serial.print("Hello World! Loops since last reset: ");
