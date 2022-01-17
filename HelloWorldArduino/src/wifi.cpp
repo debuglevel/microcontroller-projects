@@ -50,7 +50,6 @@ void wifi_list() {
     }
 }
 
-/*
 void wifi_checkInternetConnection()
 {
     Serial.println("WiFi | Checking internet connection...");
@@ -59,35 +58,38 @@ void wifi_checkInternetConnection()
 
     if (WiFi.status() == WL_CONNECTED)
     {
-        Serial.println("WiFi | WiFi status is connected; checking via HTTP request...");
+        Serial.println("WiFi | WiFi status is connected");
+
+        Serial.println("WiFi | Checking connectivity via HTTP request...");
 
         const char *url = "http://api.ipify.org/";
-        Serial.printf("WiFi | Requesting: '%s'...\n", url);
+        Serial.printf("WiFi | Requesting GET '%s'...\n", url);
         HTTPClient httpClient;
         WiFiClient wiFiClient;
-        HTTPClient::begin(wiFiClient, url);
+        httpClient.begin(wiFiClient, url);
         int httpCode = httpClient.GET();
-        Serial.printf("WiFi | Response on '%s' with HTTP code %d\n", url, httpCode);
+        Serial.printf("WiFi | Response on GET '%s': HTTP code %d\n", url, httpCode);
 
         if (httpCode > 0)
         {
             String payload = httpClient.getString();
-            Serial.printf("WiFi | Response '%s' content:", url);
-            Serial.println(payload);
+            Serial.printf("WiFi | Response on GET '%s': Content: '%s'\n", url, payload.c_str());
         }
         else
         {
-            Serial.printf("WiFi | Request '%s' failed\n", url);
+            Serial.printf("WiFi | Request on GET '%s' failed\n", url);
         }
 
+        Serial.println("Ending HTTP Client...");
         httpClient.end();
-    }
-    else
-    {
+        Serial.println("Ended HTTP Client");
+    } else {
         Serial.println("WiFi | WiFi status is NOT connected");
     }
+
+    // TODO: somehow crashes between end of inner if block and this instruction.
+    Serial.println("WiFi | Checked internet connection");
 }
-*/
 
 /*
 void mqtt_callback(char *topic, byte *payload, unsigned int length)

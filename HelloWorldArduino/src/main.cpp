@@ -28,7 +28,7 @@ void setup() {
 
     wifi_list();
     wifi_setup();
-    //wifi_checkInternetConnection();
+    wifi_checkInternetConnection();
 
     set_seed_to_uptime();
 
