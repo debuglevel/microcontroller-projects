@@ -40,16 +40,16 @@ void wifi_setup() {
 
 void wifi_list() {
     Serial.println("WiFi | Scanning for networks...");
-    int networkCount = WiFi.scanNetworks();
-    Serial.printf("WiFi | Found %d networks:\n", networkCount);
+    int networksCount = WiFi.scanNetworks(false, true, 0, NULL);
+    Serial.printf("WiFi | Found %d networks:\n", networksCount);
 
-    for (int i = 0; i < networkCount; i++) {
-        Serial.print("WiFi | Found network SSID='");
-        Serial.print(WiFi.SSID(i));
-        Serial.print("' RSSI=");
-        Serial.println(WiFi.RSSI(i));
+    for (int i = 0; i < networksCount; i++) {
+        Serial.printf("WiFi | Found network with SSID='%s' \t RSSI=%i\n",
+                      WiFi.SSID(i).c_str(),
+                      WiFi.RSSI(i));
     }
 }
+
 /*
 void wifi_checkInternetConnection()
 {
@@ -88,6 +88,7 @@ void wifi_checkInternetConnection()
     }
 }
 */
+
 /*
 void mqtt_callback(char *topic, byte *payload, unsigned int length)
 {
