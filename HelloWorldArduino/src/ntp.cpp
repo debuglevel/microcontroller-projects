@@ -6,7 +6,7 @@
 
 WiFiUDP ntpUDP;
 
-NTPClient ntpClient(ntpUDP, NTP_SERVER, 0, NTP_UPDATE_INTERVAL);
+NTPClient ntpClient(ntpUDP, NTP_SERVER, NTP_OFFSET, NTP_UPDATE_INTERVAL);
 
 // see https://github.com/arduino-libraries/NTPClient/issues/29
 #define LEAP_YEAR(Y) ((Y > 0) && !(Y % 4) && ((Y % 100) || !(Y % 400)))
