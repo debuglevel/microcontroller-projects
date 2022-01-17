@@ -45,7 +45,7 @@ void loop() {
     counter += 1;
 
     // some silly calculation
-    computePi();
+    //computePi();
 
     Serial.println("Main.Loop | Main loop finished");
 }
