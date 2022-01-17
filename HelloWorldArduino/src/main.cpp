@@ -10,6 +10,7 @@
 #include "config.h"
 #include "random.h"
 #include "ntp.h"
+#include "filedatabase.h"
 
 uint32_t counter = 1;
 
@@ -33,6 +34,10 @@ void setup() {
 
     ntp_setup();
 
+    fdb_setup();
+    fdb_list("");
+    write_timestamp_to_fdb();
+
     set_seed_to_uptime();
 
     Serial.println("Main.Setup | Setup done");
@@ -51,6 +56,8 @@ void loop() {
     // some silly calculation
     //computePi();
 
+    Serial.println("Main.Loop | Doing maintenance...");
+    periodically_write_timestamp_to_fdb();
 
     Serial.printf("Main.Loop | Delaying for %ums...\n", MAIN_LOOP_DELAY);
     delay(MAIN_LOOP_DELAY);

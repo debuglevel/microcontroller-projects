@@ -17,4 +17,9 @@
 // 74880 because bootloader (or whatever) also sends at this rate
 #define BAUDRATE 74880
 
+// write the current timestamp every x milliseconds into a file
+//#define WRITE_TIMESTAMP_INTERVAL 60000 // every 1 minute
+#define WRITE_TIMESTAMP_INTERVAL 300000 // every 5 minutes
+
+
 #endif //HELLOWORLDARDUINO_CONFIG_H
