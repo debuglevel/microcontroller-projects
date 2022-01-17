@@ -64,9 +64,11 @@ void ntp_setup() {
 
 /**
  * Not used?
+ * TODO: should be used; maybe not with the annoying Serial things
  */
 void ntp_loop() {
     Serial.println("NTP | Updating...");
+    // update() checks if the update interval has been reached; but has to be called manually nevertheless.
     ntpClient.update();
     Serial.println("NTP | Updated");
 }
