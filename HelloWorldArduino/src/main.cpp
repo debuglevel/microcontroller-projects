@@ -7,7 +7,7 @@
 
 #define SEED time(NULL)
 
-// Declare functions below cecause C++ is annoying.
+// Declare functions below because C++ is annoying.
 void computePi();
 
 uint32_t counter = 0;
@@ -17,11 +17,17 @@ void setup() {
 
     // 74880 because bootloader (or whatever) also sends at this rate
     Serial.begin(74880);
+
+    Serial.println("======================================");
+    Serial.println("Main.Setup | Setting up...");
+
+    Serial.println("Main.Setup | Setup done");
 }
 
 
 void loop() {
     // put your main code here, to run repeatedly:
+    Serial.println("Main.Loop | Entering main loop...");
 
     Serial.print("Hello World! Loops since last reset: ");
     Serial.println(counter);
@@ -29,8 +35,10 @@ void loop() {
     delay(1000);
     counter += 1;
 
-// some silly calculation
+    // some silly calculation
     computePi();
+
+    Serial.println("Main.Loop | Main loop finished");
 }
 
 
