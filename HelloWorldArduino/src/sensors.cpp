@@ -59,6 +59,7 @@ void publish_wifi_data() {
 }
 
 u_int8_t get_wifi_networks_count() {
+    // CAVEAT: needs quite a long time and probably disconnects from the station while scanning
     return WiFi.scanNetworks(false, true, 0, NULL);
 }
 
