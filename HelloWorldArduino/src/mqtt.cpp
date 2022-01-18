@@ -101,8 +101,8 @@ void mqtt_reconnect() {
             Serial.println("MQTT | Connected to MQTT server");
 
             // Publish an announcement
-            String msg = "Client ID " + clientId + " connected to broker";
-            mqttClient.publish("debuglevel/connect", msg.c_str());
+            String msg = "Client with ID=" + clientId + " connected to broker";
+            mqtt_send_message("mqtt/connection", msg.c_str());
 
             // Resubscribe
             mqttClient.subscribe("MAKO_inTopic");
