@@ -2,6 +2,7 @@
 #include "config.h"
 #include "filedatabase.h"
 #include "ntp.h"
+#include <ESP8266WiFi.h>
 
 /**
  * Wait a configured delay before entering setup.
@@ -31,4 +32,12 @@ void periodically_write_timestamp_to_fdb() {
         last_write = millis();
         write_timestamp_to_fdb();
     }
+}
+
+/**
+ * Gets a String which stays the same for a device and is unique.
+ * For now, the MAC address is used as it should fulfill this requirements.
+ */
+String get_unique_device_id() {
+    return WiFi.macAddress();
 }
