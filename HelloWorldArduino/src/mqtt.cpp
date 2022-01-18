@@ -2,6 +2,7 @@
 #include <Arduino.h>
 #include "config.h"
 #include "mqtt.h"
+#include "misc.h"
 #include <ESP8266WiFi.h>
 
 const char *mqtt_server = MQTT_SERVER;
@@ -56,9 +57,10 @@ void mqtt_send_message(const char *topic, String message) {
 }
 
 void mqtt_send_message(const char *topic, const char *message) {
-    Serial.printf("MQTT | Sending message '%s' on topic '%s'...\n", message, topic);
+    //Serial.printf("MQTT | Sending message '%s' on topic '%s'...\n", message, topic);
 
-    String topic_with_prefix = "debuglevel/" + String(topic);
+    String topic_with_prefix = "debuglevel/" + get_unique_device_id() + "/" + String(topic);
+    Serial.printf("MQTT | Sending message '%s' on topic '%s'...\n", message, topic_with_prefix.c_str());
     mqttClient.publish(topic_with_prefix.c_str(), message);
 
     //Serial.println("MQTT | Sent message");
