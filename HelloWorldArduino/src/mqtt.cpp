@@ -61,8 +61,7 @@ void mqtt_send_message(const char *topic, const char *message) {
     String topic_with_prefix = "debuglevel/" + String(topic);
     mqttClient.publish(topic_with_prefix.c_str(), message);
 
-    Serial.println("MQTT | Sent message");
-
+    //Serial.println("MQTT | Sent message");
 }
 
 void mqtt_send_ping() {
