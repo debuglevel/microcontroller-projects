@@ -11,5 +11,7 @@ void mqtt_reconnect();
 
 void mqtt_send_ping();
 
+void mqtt_send_message(const char *topic, String message);
+
 void mqtt_send_message(const char *topic, const char *message);
 #endif //HELLOWORLDARDUINO_MQTT_H

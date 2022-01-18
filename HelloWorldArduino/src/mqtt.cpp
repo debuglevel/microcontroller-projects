@@ -51,6 +51,10 @@ void mqtt_loop() {
     Serial.println("MQTT | Ended loop");
 }
 
+void mqtt_send_message(const char *topic, String message) {
+    mqtt_send_message(topic, message.c_str());
+}
+
 void mqtt_send_message(const char *topic, const char *message) {
     Serial.printf("MQTT | Sending message '%s' on topic '%s'...\n", message, topic);
 

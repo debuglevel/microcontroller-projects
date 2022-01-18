@@ -25,4 +25,8 @@ int8_t get_wifi_listen_interval();
 
 void publish_wifi_data();
 
+void publish_time_data();
+
+void publish_device_information();
+
 #endif //HELLOWORLDARDUINO_SENSORS_H
