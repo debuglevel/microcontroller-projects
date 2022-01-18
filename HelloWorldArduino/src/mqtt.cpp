@@ -51,6 +51,16 @@ void mqtt_loop() {
     Serial.println("MQTT | Ended loop");
 }
 
+void mqtt_send_message(const char *topic, const char *message) {
+    Serial.printf("MQTT | Sending message '%s' on topic '%s'...\n", message, topic);
+
+    String topic_with_prefix = "debuglevel/" + String(topic);
+    mqttClient.publish(topic_with_prefix.c_str(), message);
+
+    Serial.println("MQTT | Sent message");
+
+}
+
 void mqtt_send_ping() {
     // Serial.println("MQTT | Sending ping message...");
 
@@ -61,8 +71,8 @@ void mqtt_send_ping() {
 
         char message[50];
         snprintf(message, 50, "Ping from %s loop #%hu", clientId.c_str(), loopCount);
-        Serial.printf("MQTT | Publishing message: %s\n", message);
-        mqttClient.publish("debuglevel/ping", message);
+
+        mqtt_send_message("ping", message);
     }
 
     // Serial.println("MQTT | Sent ping message");

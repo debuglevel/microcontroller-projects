@@ -12,6 +12,7 @@
 #include "ntp.h"
 #include "filedatabase.h"
 #include "mqtt.h"
+#include "sensors.h"
 
 uint32_t counter = 1;
 
@@ -54,6 +55,8 @@ void loop() {
     Serial.printf("Main.Loop | Entering main loop, iteration %u...\n", counter);
 
 
+    publish_sensor_data();
+    //wifi_list();
     // Serial.print("Hello World!");
 
     // some silly calculation
