@@ -10,47 +10,52 @@ void publish_sensor_data() {
 }
 
 void publish_device_information() {
-    mqtt_send_message("chip-id", String(ESP.getChipId()));
-    mqtt_send_message("boot-version", String(ESP.getBootVersion()));
-    mqtt_send_message("sdk-version", String(ESP.getSdkVersion()));
-    mqtt_send_message("core-version", String(ESP.getCoreVersion()));
-    mqtt_send_message("cpu-frequency", String(ESP.getCpuFreqMHz()));
-    mqtt_send_message("flash-size", String(ESP.getFlashChipSize()));
-    mqtt_send_message("flash-real-size", String(ESP.getFlashChipRealSize()));
-    mqtt_send_message("flash-speed", String(ESP.getFlashChipSpeed()));
-    mqtt_send_message("free-heap", String(ESP.getFreeHeap()));
-    mqtt_send_message("full-version", String(ESP.getFullVersion()));
+    mqtt_send_message("device/chip/id", String(ESP.getChipId()));
+    mqtt_send_message("device/boot/version", String(ESP.getBootVersion()));
+    mqtt_send_message("device/boot/mode", String(ESP.getBootMode()));
+    mqtt_send_message("device/sdk/version", String(ESP.getSdkVersion()));
+    mqtt_send_message("device/sdk/version-full", String(ESP.getFullVersion()));
+    mqtt_send_message("device/core/version", String(ESP.getCoreVersion()));
+    mqtt_send_message("device/cpu/frequency-mhz", String(ESP.getCpuFreqMHz()));
+    mqtt_send_message("device/flash/size", String(ESP.getFlashChipSize()));
+    mqtt_send_message("device/flash/real-size", String(ESP.getFlashChipRealSize()));
+    mqtt_send_message("device/flash/speed", String(ESP.getFlashChipSpeed()));
+    mqtt_send_message("device/flash/id", String(ESP.getFlashChipId()));
+    mqtt_send_message("device/flash/mode", String(ESP.getFlashChipMode()));
+    mqtt_send_message("device/flash/vendor-id", String(ESP.getFlashChipVendorId()));
+    mqtt_send_message("device/memory/free-heap", String(ESP.getFreeHeap()));
+    mqtt_send_message("device/memory/heap-fragmentation", String(ESP.getHeapFragmentation()));
 }
 
 void publish_time_data() {
     mqtt_send_message("datetime", getFormattedDateTime().c_str());
 
     int64_t uptimeSeconds = millis() / 1000;
-    mqtt_send_message("uptime-seconds", String(uptimeSeconds));
-    mqtt_send_message("uptime-minutes", String((double) uptimeSeconds / 60));
-    mqtt_send_message("uptime-hours", String((double) uptimeSeconds / 60 / 60));
-    mqtt_send_message("uptime-days", String((double) uptimeSeconds / 60 / 60 / 24));
+    mqtt_send_message("uptime/seconds", String(uptimeSeconds));
+    mqtt_send_message("uptime/minutes", String((double) uptimeSeconds / 60));
+    mqtt_send_message("uptime/hours", String((double) uptimeSeconds / 60 / 60));
+    mqtt_send_message("uptime/days", String((double) uptimeSeconds / 60 / 60 / 24));
 }
 
 void publish_wifi_data() {
     // about the environment
-    mqtt_send_message("wifi-networks-count", String(get_wifi_networks_count()));
+    mqtt_send_message("wifi/networks-count", String(get_wifi_networks_count()));
 
     // about the device configuration
-    mqtt_send_message("wifi-device-listen-interval", String(get_wifi_listen_interval()));
-    mqtt_send_message("wifi-device-autoconnect", String(get_wifi_autoconnect()));
-    mqtt_send_message("wifi-device-autoreconnect", String(get_wifi_autoreconnect()));
+    mqtt_send_message("wifi/device/listen-interval", String(get_wifi_listen_interval()));
+    mqtt_send_message("wifi/device/autoconnect", String(get_wifi_autoconnect()));
+    mqtt_send_message("wifi/device/autoreconnect", String(get_wifi_autoreconnect()));
 
     // invariable facts about the device
-    mqtt_send_message("wifi-device-mac-address", get_wifi_mac_address());
+    mqtt_send_message("wifi/device/mac-address", get_wifi_mac_address());
 
     // invariable facts about the station
-    mqtt_send_message("wifi-station-bssid", get_wifi_station_bssid());
+    mqtt_send_message("wifi/station/bssid", get_wifi_station_bssid());
 
     // about the connection
-    mqtt_send_message("wifi-device-hostname", get_wifi_hostname());
-    mqtt_send_message("wifi-device-ip", get_wifi_local_ip());
-    mqtt_send_message("wifi-connection-rssi", String(get_wifi_rssi()));
+    mqtt_send_message("wifi/device/hostname", get_wifi_hostname());
+    mqtt_send_message("wifi/device/ip", get_wifi_local_ip());
+    mqtt_send_message("wifi/connection/rssi", String(get_wifi_rssi()));
 }
 
 u_int8_t get_wifi_networks_count() {
