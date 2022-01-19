@@ -13,6 +13,8 @@ void publish_device_information() {
     mqtt_send_message("device/chip/id", String(ESP.getChipId()));
     mqtt_send_message("device/boot/version", String(ESP.getBootVersion()));
     mqtt_send_message("device/boot/mode", String(ESP.getBootMode()));
+    mqtt_send_message("device/boot/reset/info", String(ESP.getResetInfo()));
+    mqtt_send_message("device/boot/reset/reason", String(ESP.getResetReason()));
     mqtt_send_message("device/sdk/version", String(ESP.getSdkVersion()));
     mqtt_send_message("device/sdk/version-full", String(ESP.getFullVersion()));
     mqtt_send_message("device/core/version", String(ESP.getCoreVersion()));
