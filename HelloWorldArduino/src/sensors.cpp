@@ -15,18 +15,18 @@ void publish_device_information() {
     mqtt_send_message("device/boot/mode", String(ESP.getBootMode()));
     mqtt_send_message("device/boot/reset/info", String(ESP.getResetInfo()));
     mqtt_send_message("device/boot/reset/reason", String(ESP.getResetReason()));
-    mqtt_send_message("device/sdk/version", String(ESP.getSdkVersion()));
-    mqtt_send_message("device/sdk/version-full", String(ESP.getFullVersion()));
+    mqtt_send_message("device/sdk/version/short", String(ESP.getSdkVersion()));
+    mqtt_send_message("device/sdk/version/full", String(ESP.getFullVersion()));
     mqtt_send_message("device/core/version", String(ESP.getCoreVersion()));
-    mqtt_send_message("device/cpu/frequency-mhz", String(ESP.getCpuFreqMHz()));
+    mqtt_send_message("device/cpu/frequency/mhz", String(ESP.getCpuFreqMHz()));
     mqtt_send_message("device/flash/size", String(ESP.getFlashChipSize()));
     mqtt_send_message("device/flash/real-size", String(ESP.getFlashChipRealSize()));
     mqtt_send_message("device/flash/speed", String(ESP.getFlashChipSpeed()));
     mqtt_send_message("device/flash/id", String(ESP.getFlashChipId()));
     mqtt_send_message("device/flash/mode", String(ESP.getFlashChipMode()));
-    mqtt_send_message("device/flash/vendor-id", String(ESP.getFlashChipVendorId()));
-    mqtt_send_message("device/memory/free-heap", String(ESP.getFreeHeap()));
-    mqtt_send_message("device/memory/heap-fragmentation", String(ESP.getHeapFragmentation()));
+    mqtt_send_message("device/flash/vendor/id", String(ESP.getFlashChipVendorId()));
+    mqtt_send_message("device/memory/heap/free", String(ESP.getFreeHeap()));
+    mqtt_send_message("device/memory/heap/fragmentation", String(ESP.getHeapFragmentation()));
 }
 
 void publish_time_data() {
