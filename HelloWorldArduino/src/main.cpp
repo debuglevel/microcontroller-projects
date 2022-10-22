@@ -1,80 +1,77 @@
-
 #include <Arduino.h>
 #include <stdio.h>
 #include <math.h>
 #include <stdlib.h>
 #include <time.h>
-#define SEED time(NULL)
 
-// Declare functions below because C++ is annoying.
-void computePi();
+#include "pi.h"
+#include "wifi.h"
+#include "misc.h"
+#include "config.h"
+#include "random.h"
+#include "ntp.h"
+#include "filedatabase.h"
+#include "mqtt.h"
+#include "sensors.h"
 
-uint32_t counter = 0;
+uint32_t counter = 1;
 
+/**
+ * Runs once on microcontroller reset.
+ */
 void setup()
 {
-  // put your setup code here, to run once:
+    waitSetup();
 
-  // 74880 because boatloader (or whatever) also sends at this rate
-  Serial.begin(74880);
+    Serial.begin(BAUDRATE);
+
+    Serial.println("======================================");
+    Serial.println("Main.Setup | Setting up...");
+
+    Serial.print("Main.Setup | Baud rate was already set to: ");
+    Serial.println(BAUDRATE);
+
+    wifi_list();
+    wifi_setup();
+    // wifi_checkInternetConnection();
+
+    ntp_setup();
+
+    mqtt_setup();
+
+    fdb_setup();
+    fdb_list("");
+    write_timestamp_to_fdb();
+
+    set_seed_to_uptime();
+
+    Serial.println("Main.Setup | Setup done");
 }
 
-
+/**
+ * Runs repeatedly.
+ */
 void loop()
 {
-  // put your main code here, to run repeatedly:
+    ulong start_time = millis();
+    Serial.printf("Main.Loop | Entering main loop, iteration %u...\n", counter);
 
-  Serial.print("Hello World! Loops since last reset: ");
-  Serial.println(counter);
+    publish_sensor_data();
+    // wifi_list();
+    //  Serial.print("Hello World!");
 
-  delay(1000);
-  counter += 1;
+    // some silly calculation
+    // computePi();
 
-// some silly calculation
-  computePi();
-}
+    Serial.println("Main.Loop | Doing maintenance...");
+    periodically_write_timestamp_to_fdb();
+    mqtt_loop();
+    ntp_loop();
 
+    Serial.printf("Main.Loop | Delaying for %ums...\n", MAIN_LOOP_DELAY);
+    delay(MAIN_LOOP_DELAY);
 
-void computePi() {
- Serial.println("PI | Computing pi...");
-
- Serial.print("PI | Using seed = ");
- Serial.println(SEED);
- srand(SEED); // uses uptime seconds (integer) as seed
-
- // NB: use uintXX_t instead of int, long et cetera, because their length varies depending of the platform.
- uint32_t iterations;
-
- // wemos d1         @ ESP8266:    28117 per second
- // Arduino nano 3.0 @ ATmega328P:  5623 per second
- iterations = 28117*1;
-
- Serial.print("PI | Using iterations = ");
- Serial.println(iterations);
-
- Serial.print("PI | Doing calculation rounds... ");
- uint32_t iteration;
- uint32_t count = 0;
- double x, y, z;
- for(iteration = 0; iteration < iterations; ++iteration) {
-     x = (double)rand() / RAND_MAX;
-     y = (double)rand() / RAND_MAX;
-     z = x*x + y*y;
-
-     if (z <= 1) {
-       count++;
-     }
-
-     yield();
- }
- Serial.println("done");
-
- Serial.print("PI | Final calculation... ");
- double pi;
- pi = (double)count / iterations * 4;
- Serial.print("done: ");
-
- Serial.println(pi, 10);
-
- Serial.println("PI | Computed pi...");
+    ulong loop_time = millis() - start_time;
+    Serial.printf("Main.Loop | Main loop finished, iteration %u, took %lums...\n", counter, loop_time);
+    counter += 1;
 }

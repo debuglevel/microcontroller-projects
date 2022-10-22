@@ -36,13 +36,18 @@ to define which board is plugged in. For mere compilation (`pio run`), this is n
 
 Also try filters, e.g. `platformio device monitor -f time` to display a timestamp. `-f esp8266_exception_decoder` should decode crash exceptions.
 
-Some bootloaders like in ESP8266 send some stuff over serial. If not set to the correct baudrate, this is just decoded as garbage.
+Some bootloaders like in ESP8266 send some stuff over serial. If not set to the correct baudrate, this is just decoded
+as garbage.
 
-You probably have to cancel monitoring if you want to `pio run upload`.
-Some combination like `pio run --target upload --target monitor` or `pio upload && pio device monitor` might be a usable workaround.
+You probably have to cancel monitoring if you want to `pio run upload`. Some combination
+like `pio run --target upload --target monitor` or `pio upload && pio device monitor` might be a usable workaround.
 
 ## PlatformIO `home` GUI
-`pio home` starts a web GUI on `localhost:8008`.
-If you want, you can open it using `platformio home --host=0.0.0.0`.
-You can then secure it ba providing some kind of token: `platformio home --host=0.0.0.0 --session-id=hello` which makes it available at <http://HOST:8008/session/hello/> for those who know.
 
+`pio home` starts a web GUI on `localhost:8008`. If you want, you can open it using `platformio home --host=0.0.0.0`.
+You can then secure it ba providing some kind of token: `platformio home --host=0.0.0.0 --session-id=hello` which makes
+it available at <http://HOST:8008/session/hello/> for those who know.
+
+## MQTT
+
+MQTT Explorer is a nice tool to subscribe to topics and graph their history.
