@@ -1,5 +1,5 @@
 #include <NTPClient.h>
-#include <ESP8266WiFi.h>
+#include <WiFi.h>
 #include <WiFiUdp.h>
 #include "config.h"
 #include "ntp.h"

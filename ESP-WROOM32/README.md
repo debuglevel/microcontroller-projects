@@ -7,7 +7,7 @@
 ## Arduino configuration
 
 - Board: "DOIT ESP32 DEKITv1" ("ESP Dev Module" and "LOLIN D32" also worked)
-- Upload speed: 11520 (921600 also worked)
+- Upload speed: 115200 (921600 also worked)
 - Flash frequency: 80 MHz
 - Needs to press "BOOT" button for about 1 second while upload waits for `Connecting........_____....._`!
 
@@ -98,19 +98,19 @@ with help from Cicicok */
 uint32_t chipId = 0;
 
 void setup() {
-	Serial.begin(115200);
+ Serial.begin(115200);
 }
 
 void loop() {
-	for(int i=0; i<17; i=i+8) {
-	  chipId |= ((ESP.getEfuseMac() >> (40 - i)) & 0xff) << i;
-	}
+ for(int i=0; i<17; i=i+8) {
+   chipId |= ((ESP.getEfuseMac() >> (40 - i)) & 0xff) << i;
+ }
 
-	Serial.printf("ESP32 Chip model = %s Rev %d\n", ESP.getChipModel(), ESP.getChipRevision());
-	Serial.printf("This chip has %d cores\n", ESP.getChipCores());
+ Serial.printf("ESP32 Chip model = %s Rev %d\n", ESP.getChipModel(), ESP.getChipRevision());
+ Serial.printf("This chip has %d cores\n", ESP.getChipCores());
     Serial.print("Chip ID: "); Serial.println(chipId);
 
-	delay(3000);
+ delay(3000);
 
 }
 ```

@@ -3,7 +3,7 @@
 #include "config.h"
 #include "mqtt.h"
 #include "misc.h"
-#include <ESP8266WiFi.h>
+#include <WiFi.h>
 
 const char *mqtt_server = MQTT_SERVER;
 const int mqtt_port = MQTT_PORT;

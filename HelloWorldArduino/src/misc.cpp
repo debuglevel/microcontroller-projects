@@ -2,7 +2,7 @@
 #include "config.h"
 #include "filedatabase.h"
 #include "ntp.h"
-#include <ESP8266WiFi.h>
+#include <WiFi.h>
 
 /**
  * Wait a configured delay before entering setup.

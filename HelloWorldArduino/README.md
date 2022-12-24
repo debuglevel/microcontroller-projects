@@ -1,38 +1,53 @@
-## Install platformio
+# PlatformIO cheat sheet
+
+## Install `platformio`
+
 See their website.
+It might still be `python3 -c "$(curl -fsSL https://raw.githubusercontent.com/platformio/platformio/master/scripts/get-platformio.py)"`
 
-Might still be `python3 -c "$(curl -fsSL https://raw.githubusercontent.com/platformio/platformio/master/scripts/get-platformio.py)"`
+## `/dev/ttyUSB*` permissions
 
-## Activate platformio
-For the sake of ease, do `source ~/.platformio/penv/bin/activate` to activate the Python virtual environment of platfomio.
-`platformio` (or the shortcut `pio`) will be in your PATH.
+`sudo chmod 666 /dev/ttyUSB0`
 
-## Check which `run` targets exist
-```shell
-$ ~/.platformio/penv/bin/platformio run --list-targets
+To let you regular user access `/dev/ttyUSB*` without `chmod`ing it every time, add some udev rules:
+
+```sh
+curl -fsSL https://raw.githubusercontent.com/platformio/platformio-core/master/scripts/99-platformio-udev.rules | sudo tee /etc/udev/rules.d/99-platformio-udev.rules > /dev/null
+```
+
+## Activate virtual environment
+
+For the sake of ease, just do `source ~/.platformio/penv/bin/activate` to activate the Python virtual environment of platfomio.
+`platformio` (and the shortcut `pio`) will be in your `$PATH` from now on (instead of `~/.platformio/penv/bin/platformio`).
+
+## List `run` targets
+
+```sh
+$ platformio run --list-targets
+
 Environment    Group     Name         Title                        Description
 -------------  --------  -----------  ---------------------------  ------------------------------------------------------------
-d1             Advanced  compiledb    Compilation Database         Generate compilation database `compile_commands.json`
-d1             General   clean        Clean
-d1             General   cleanall     Clean All                    Clean a build environment and installed library dependencies
-d1             Platform  buildfs      Build Filesystem Image
-d1             Platform  erase        Erase Flash
-d1             Platform  size         Program Size                 Calculate program size
-d1             Platform  upload       Upload
-d1             Platform  uploadfs     Upload Filesystem Image
-d1             Platform  uploadfsota  Upload Filesystem Image OTA
+esp32          Advanced  compiledb    Compilation Database         Generate compilation database `compile_commands.json`
+esp32          General   clean        Clean
+esp32          General   cleanall     Clean All                    Clean a build environment and installed library dependencies
+esp32          Platform  buildfs      Build Filesystem Image
+esp32          Platform  erase        Erase Flash
+esp32          Platform  size         Program Size                 Calculate program size
+esp32          Platform  upload       Upload
+esp32          Platform  uploadfs     Upload Filesystem Image
+esp32          Platform  uploadfsota  Upload Filesystem Image OTA
 ```
 
 ## Compile and upload
-`platformio run --target=upload` will compile and upload it.
 
-If more than one environment is defined in `platformio.ini`, you should use `--environment wemos_d1` or `--environment arduino_nano_3`
-to define which board is plugged in. For mere compilation (`pio run`), this is not needed - all environments will be built.
+* `pio run` will compile the project for every environment defined in `platformio.ini`.
+Use `--environment esp32` to compile it only for one environment.
+* `platformio run --target=upload` will compile and upload the project via `ttyUSB`.
+Again, use `--environment esp32` to define which board is plugged in, as there will be chaos otherwise.
 
 ## Monitor Serial
-`sudo chmod 666 /dev/ttyUSB0` might be needed if you did not install the `udev` rules <https://docs.platformio.org/en/latest/faq.html#platformio-udev-rules>.
 
-`platformio device monitor` might just work, as it loads the baudrate from `platformio.ini`.
+`platformio device monitor` should just work, as it uses the baudrate from `platformio.ini`.
 
 Also try filters, e.g. `platformio device monitor -f time` to display a timestamp. `-f esp8266_exception_decoder` should decode crash exceptions.
 

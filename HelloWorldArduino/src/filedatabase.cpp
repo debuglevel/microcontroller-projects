@@ -1,4 +1,6 @@
 #include <FS.h>
+#include <SPIFFS.h>
+#include <dirent.h>
 
 void fdb_setup() {
     Serial.println("FDB | Mounting SPIFFS...");
@@ -11,15 +13,22 @@ void fdb_setup() {
     }
 }
 
+// TODO: Untested
 void fdb_list(const char *directory) {
-    Serial.printf("FDB | Files in directory '%s':\n", directory);
+    Serial.printf("FDB | Files in filesystem '%s':\n", directory);
 
-    String output = "";
-    Dir dir = SPIFFS.openDir(directory);
-    while (dir.next()) {
-        Serial.printf("FDB | Filename: %s | Bytes: %i\n",
-                      dir.fileName().c_str(),
-                      dir.fileSize());
+    DIR* dir = opendir(directory);
+    if (dir == NULL) {
+        return;
+    }
+
+    while (true) {
+        struct dirent* de = readdir(dir);
+        if (!de) {
+            break;
+        }
+        
+        printf("FDB | Filename: %s\n", de->d_name);
     }
 }
 
