@@ -90,7 +90,7 @@ void setup(void) {
         break;
   }
 
-  // set/getCycleRate
+  mpu.enableCycle(false);
 
   Serial.println("");
   delay(100);
@@ -98,8 +98,8 @@ void setup(void) {
 
 void loop() {
   /* Get new sensor events with the readings */
-  sensors_event_t a, g, temp;
-  mpu.getEvent(&a, &g, &temp);
+  sensors_event_t accel, gyro, temperature;
+  mpu.getEvent(&accel, &gyro, &temperature);
 
   /* Print out the values */
 //   Serial.print("Acceleration X: ");
@@ -138,7 +138,7 @@ void loop() {
     // Serial.print(rawAccel.YAxis);
     Serial.print(" Zraw:");
     //Serial.print(rawAccel.ZAxis);
-    Serial.print(a.acceleration.z);
+    Serial.print(accel.acceleration.z);
 
     //  Serial.print(" Xnorm:");
     //  Serial.print(normAccel.XAxis);
@@ -149,5 +149,5 @@ void loop() {
 
     Serial.println();
 
-    delay(100);
+    //delay(100);
 }
