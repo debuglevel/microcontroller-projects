@@ -6,102 +6,139 @@
     (c) 2014 by Korneliusz Jarzebski
 */
 
+
+#include <Adafruit_MPU6050.h>
+#include <Adafruit_Sensor.h>
 #include <Wire.h>
-#include <MPU6050.h>
 
-MPU6050 mpu;
+Adafruit_MPU6050 mpu;
 
-void checkSettings()
-{
-    Serial.println();
+void setup(void) {
+  Serial.begin(115200);
 
-    Serial.print(" * Sleep Mode:            ");
-    Serial.println(mpu.getSleepEnabled() ? "Enabled" : "Disabled");
+//   while (!Serial)
+//     delay(10); // will pause Zero, Leonardo, etc until serial console opens
 
-    Serial.print(" * Clock Source:          ");
-    switch (mpu.getClockSource())
-    {
-    case MPU6050_CLOCK_KEEP_RESET:
-        Serial.println("Stops the clock and keeps the timing generator in reset");
-        break;
-    case MPU6050_CLOCK_EXTERNAL_19MHZ:
-        Serial.println("PLL with external 19.2MHz reference");
-        break;
-    case MPU6050_CLOCK_EXTERNAL_32KHZ:
-        Serial.println("PLL with external 32.768kHz reference");
-        break;
-    case MPU6050_CLOCK_PLL_ZGYRO:
-        Serial.println("PLL with Z axis gyroscope reference");
-        break;
-    case MPU6050_CLOCK_PLL_YGYRO:
-        Serial.println("PLL with Y axis gyroscope reference");
-        break;
-    case MPU6050_CLOCK_PLL_XGYRO:
-        Serial.println("PLL with X axis gyroscope reference");
-        break;
-    case MPU6050_CLOCK_INTERNAL_8MHZ:
-        Serial.println("Internal 8MHz oscillator");
-        break;
+  Serial.println("Adafruit MPU6050 test!");
+
+  // Try to initialize!
+  if (!mpu.begin()) {
+    Serial.println("Failed to find MPU6050 chip");
+    while (1) {
+      delay(10);
     }
+  }
+  Serial.println("MPU6050 Found!");
 
-    Serial.print(" * Accelerometer:         ");
-    switch (mpu.getRange())
-    {
-    case MPU6050_RANGE_16G:
-        Serial.println("+/- 16 g");
+  mpu.setAccelerometerRange(MPU6050_RANGE_2_G);
+  Serial.print("Accelerometer range set to: ");
+  switch (mpu.getAccelerometerRange()) {
+    case MPU6050_RANGE_2_G:
+        Serial.println("+-2G");
         break;
-    case MPU6050_RANGE_8G:
-        Serial.println("+/- 8 g");
+    case MPU6050_RANGE_4_G:
+        Serial.println("+-4G");
         break;
-    case MPU6050_RANGE_4G:
-        Serial.println("+/- 4 g");
+    case MPU6050_RANGE_8_G:
+        Serial.println("+-8G");
         break;
-    case MPU6050_RANGE_2G:
-        Serial.println("+/- 2 g");
+    case MPU6050_RANGE_16_G:
+        Serial.println("+-16G");
         break;
-    }
+  }
 
-    Serial.print(" * Accelerometer offsets: ");
-    Serial.print(mpu.getAccelOffsetX());
-    Serial.print(" / ");
-    Serial.print(mpu.getAccelOffsetY());
-    Serial.print(" / ");
-    Serial.println(mpu.getAccelOffsetZ());
+  mpu.setGyroRange(MPU6050_RANGE_500_DEG);
+  Serial.print("Gyro range set to: ");
+  switch (mpu.getGyroRange()) {
+    case MPU6050_RANGE_250_DEG:
+        Serial.println("+- 250 deg/s");
+        break;
+    case MPU6050_RANGE_500_DEG: //
+        Serial.println("+- 500 deg/s");
+        break;
+    case MPU6050_RANGE_1000_DEG:
+        Serial.println("+- 1000 deg/s");
+        break;
+    case MPU6050_RANGE_2000_DEG:
+        Serial.println("+- 2000 deg/s");
+        break;
+  }
 
-    Serial.println();
+  mpu.setFilterBandwidth(MPU6050_BAND_260_HZ);
+  Serial.print("Filter bandwidth set to: ");
+  switch (mpu.getFilterBandwidth()) {
+    case MPU6050_BAND_260_HZ:
+        Serial.println("260 Hz");
+        break;
+    case MPU6050_BAND_184_HZ:
+        Serial.println("184 Hz");
+        break;
+    case MPU6050_BAND_94_HZ:
+        Serial.println("94 Hz");
+        break;
+    case MPU6050_BAND_44_HZ:
+        Serial.println("44 Hz");
+        break;
+    case MPU6050_BAND_21_HZ:
+        Serial.println("21 Hz");
+        break;
+    case MPU6050_BAND_10_HZ:
+        Serial.println("10 Hz");
+        break;
+    case MPU6050_BAND_5_HZ: //
+        Serial.println("5 Hz");
+        break;
+  }
+
+  // set/getCycleRate
+
+  Serial.println("");
+  delay(100);
 }
 
-void setup()
-{
-    Serial.begin(115200);
+void loop() {
+  /* Get new sensor events with the readings */
+  sensors_event_t a, g, temp;
+  mpu.getEvent(&a, &g, &temp);
 
-    Serial.println("Initialize MPU6050");
+  /* Print out the values */
+//   Serial.print("Acceleration X: ");
+//   Serial.print(a.acceleration.x);
+//   Serial.print(", Y: ");
+//   Serial.print(a.acceleration.y);
+//   Serial.print(", Z: ");
+  //Serial.print(a.acceleration.z);
+//   Serial.println(" m/s^2");
 
-    while (!mpu.begin(MPU6050_SCALE_2000DPS, MPU6050_RANGE_2G))
-    {
-        Serial.println("Could not find a valid MPU6050 sensor, check wiring!");
-        delay(500);
-    }
+//   Serial.print("Rotation X: ");
+//   Serial.print(g.gyro.x);
+//   Serial.print(", Y: ");
+//   Serial.print(g.gyro.y);
+//   Serial.print(", Z: ");
+//   Serial.print(g.gyro.z);
+//   Serial.println(" rad/s");
 
-    // If you want, you can set accelerometer offsets
-    // mpu.setAccelOffsetX();
-    // mpu.setAccelOffsetY();
-    // mpu.setAccelOffsetZ();
+//   Serial.print("Temperature: ");
+//   Serial.print(temp.temperature);
+//   Serial.println(" degC");
 
-    checkSettings();
-}
+//   Serial.println("");
+//   delay(500);
 
-void loop()
-{
-    Vector rawAccel = mpu.readRawAccel();
-    Vector normAccel = mpu.readNormalizeAccel();
+
+
+    //a.acceleration.z;
+
+    //Vector rawAccel = mpu.readRawAccel();
+    //Vector normAccel = mpu.readNormalizeAccel();
 
     // Serial.print("Xraw:");
     // Serial.print(rawAccel.XAxis);
     // Serial.print(" Yraw:");
     // Serial.print(rawAccel.YAxis);
     Serial.print(" Zraw:");
-    Serial.print(rawAccel.ZAxis);
+    //Serial.print(rawAccel.ZAxis);
+    Serial.print(a.acceleration.z);
 
     //  Serial.print(" Xnorm:");
     //  Serial.print(normAccel.XAxis);
@@ -112,5 +149,5 @@ void loop()
 
     Serial.println();
 
-    // delay(100);
+    delay(100);
 }
