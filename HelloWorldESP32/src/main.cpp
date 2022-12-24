@@ -39,9 +39,9 @@ void setup()
 
     mqtt_setup();
 
-    fdb_setup();
-    fdb_list("");
-    write_timestamp_to_fdb();
+    //fdb_setup();
+    //fdb_list("");
+    //write_timestamp_to_fdb();
 
     set_seed_to_uptime();
 

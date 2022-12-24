@@ -19,7 +19,7 @@ void wifi_setup() {
         delay(WIFI_RECONNECT_DELAY);
     }
 
-    Serial.printf("WiFi | Connected with IP %s\n", WiFi.localIP().toString().c_str());
+    Serial.printf("WiFi | Connected as IP %s\n", WiFi.localIP().toString().c_str());
 }
 
 /**

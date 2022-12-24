@@ -10,6 +10,6 @@
  */
 void set_seed_to_uptime() {
     unsigned long seed = micros();
-    Serial.printf("Random | Setting randomSeed(%lu)...\n", seed);
+    Serial.printf("Random | Using uptime %luµs as randomSeed(%lu)...\n", seed, seed);
     randomSeed(seed);
 }
