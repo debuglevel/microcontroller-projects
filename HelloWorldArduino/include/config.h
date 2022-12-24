@@ -2,7 +2,7 @@
 #define HELLOWORLDARDUINO_CONFIG_H
 
 #define WIFI_SSID "Pretty Fly For a WiFi 2.4GHz"
-#define WIFI_PASSWORD "SECRET"
+#define WIFI_PASSWORD "wgmoos123"
 #define WIFI_RECONNECT_DELAY 500
 
 #define WAIT_BEFORE_SETUP 2000
@@ -14,8 +14,8 @@
 //#define NTP_OFFSET 3600 // offset to UTC, although that is not too smart without handling daylight saving time.
 #define NTP_OFFSET 0 // UTC (no offset)
 
-// 74880 because bootloader (or whatever) also sends at this rate
-#define BAUDRATE 74880
+// 115200 because bootloader (or whatever) also sends at this rate
+#define BAUDRATE 115200
 
 // write the current timestamp every x milliseconds into a file
 //#define WRITE_TIMESTAMP_INTERVAL 60000 // every 1 minute
