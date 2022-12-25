@@ -10,11 +10,32 @@
 #include <Adafruit_MPU6050.h>
 #include <Adafruit_Sensor.h>
 #include <Wire.h>
+#include "wifi.h"
+#include "mqtt.h"
+#include "ntp.h"
 
 Adafruit_MPU6050 mpu;
 
 void setup(void) {
   Serial.begin(115200);
+
+
+
+
+    wifi_list();
+    wifi_setup();
+    // wifi_checkInternetConnection();
+
+    //ntp_setup();
+
+    mqtt_setup();
+
+
+
+
+
+
+
 
 //   while (!Serial)
 //     delay(10); // will pause Zero, Leonardo, etc until serial console opens
@@ -96,58 +117,113 @@ void setup(void) {
   delay(100);
 }
 
+typedef struct {
+    float accelX;
+    float accelY;
+    float accelZ;
+    float gyroX;
+    float gyroY;
+    float gyroZ;
+} sensor_values_t;
+
+// struct Gyro_data_structure
+// {
+//     //char command_name[6];
+//     int gyro_X;
+//     //int gyro_Y;
+//     //int gyro_Z;
+// };
+
+// void writeBinary(sensors_event_t accel, sensors_event_t gyro) {
+  
+//   Serial.print("##");
+//   Gyro_data_structure Gyro_data = {200};
+//   Serial.print(sizeof(Gyro_data_structure)); // 4 bytes / 32 bit
+//   Serial.print("::");
+//   Serial.write((uint8_t *) &Gyro_data, sizeof Gyro_data);
+//   Serial.print("##");
+//   delay(100);
+
+
+//   Serial.print(sizeof(float)); // 4 bytes / 32 bit
+//   Serial.print("//");
+//   float test = 1.23;
+//   Serial.write((byte*)&test, sizeof(float));
+//   Serial.print("\\\\");
+
+
+//   sensor_values_t vals;
+//   vals.accelX = 1.23; //accel.acceleration.x;
+//   vals.accelY = 4.56; //accel.acceleration.y;
+//   vals.accelZ = 7.89; //accel.acceleration.z;
+//   vals.gyroX = 0.01; //gyro.gyro.x;
+//   vals.gyroY = 0.001; //gyro.gyro.y;
+//   vals.gyroZ = 0.0001; //gyro.gyro.z;
+
+
+//   Serial.println("========");
+//   Serial.println(sizeof(sensor_values_t));
+//   Serial.println("--------");
+  
+//   Serial.write((byte*)&vals, sizeof(vals));
+
+//   Serial.println("");
+//   Serial.println("========");
+// }
+
+void writeMQTT(sensors_event_t accel, sensors_event_t gyro) {
+  String msg = "" + String(accel.acceleration.x) + "," + accel.acceleration.y + "," + accel.acceleration.z + "," + gyro.gyro.x + "," + gyro.gyro.y + "," + gyro.gyro.z;
+  mqtt_send_message("sleepsensor", msg);
+}
+
+void writeCSV(sensors_event_t accel, sensors_event_t gyro) {
+  Serial.print(accel.acceleration.x);
+  Serial.print(",");
+  Serial.print(accel.acceleration.y);
+  Serial.print(",");
+  Serial.print(accel.acceleration.z);
+  Serial.print(",");
+
+  Serial.print(gyro.gyro.x);
+  Serial.print(",");
+  Serial.print(gyro.gyro.y);
+  Serial.print(",");
+  Serial.print(gyro.gyro.z);
+
+  Serial.println();
+}
+
+void writePlotter(sensors_event_t accel, sensors_event_t gyro) {
+  Serial.print(" AccX:");
+  Serial.print(accel.acceleration.x);
+  Serial.print(" AccY:");
+  Serial.print(accel.acceleration.y);
+  Serial.print(" AccZ:");
+  Serial.print(accel.acceleration.z);
+
+  Serial.print(" GyroX:");
+  Serial.print(gyro.gyro.x);
+  Serial.print(" GyroY:");
+  Serial.print(gyro.gyro.y);
+  Serial.print(" GyroZ:");
+  Serial.print(gyro.gyro.z);
+
+  Serial.println();
+}
+
 void loop() {
   /* Get new sensor events with the readings */
   sensors_event_t accel, gyro, temperature;
   mpu.getEvent(&accel, &gyro, &temperature);
 
-  /* Print out the values */
-//   Serial.print("Acceleration X: ");
-//   Serial.print(a.acceleration.x);
-//   Serial.print(", Y: ");
-//   Serial.print(a.acceleration.y);
-//   Serial.print(", Z: ");
-  //Serial.print(a.acceleration.z);
-//   Serial.println(" m/s^2");
+  //mqtt_send_message("test1", "test2");
 
-//   Serial.print("Rotation X: ");
-//   Serial.print(g.gyro.x);
-//   Serial.print(", Y: ");
-//   Serial.print(g.gyro.y);
-//   Serial.print(", Z: ");
-//   Serial.print(g.gyro.z);
-//   Serial.println(" rad/s");
+  mqtt_loop();
 
-//   Serial.print("Temperature: ");
-//   Serial.print(temp.temperature);
-//   Serial.println(" degC");
+  writeMQTT(accel, gyro);
+  //writeBinary(accel, gyro);
+  //writeCSV(accel, gyro);
+  //writePlotter(accel, gyro);
 
-//   Serial.println("");
-//   delay(500);
-
-
-
-    //a.acceleration.z;
-
-    //Vector rawAccel = mpu.readRawAccel();
-    //Vector normAccel = mpu.readNormalizeAccel();
-
-    // Serial.print("Xraw:");
-    // Serial.print(rawAccel.XAxis);
-    // Serial.print(" Yraw:");
-    // Serial.print(rawAccel.YAxis);
-    Serial.print(" Zraw:");
-    //Serial.print(rawAccel.ZAxis);
-    Serial.print(accel.acceleration.z);
-
-    //  Serial.print(" Xnorm:");
-    //  Serial.print(normAccel.XAxis);
-    //  Serial.print(" Ynorm:");
-    //  Serial.print(normAccel.YAxis);
-    //  Serial.print(" Znorm:");
-    //  Serial.println(normAccel.ZAxis);
-
-    Serial.println();
-
-    //delay(100);
+  //delay(100);
 }
