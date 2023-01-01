@@ -26,7 +26,7 @@ def on_message(client, userdata, msg):
     # eprint("Received message on topic " + msg.topic + ": " + str(msg.payload))
     # eprint(".", end = '', flush=True)
 
-    iso8601_time = datetime.now().isoformat()
+    iso8601_time = datetime.now().isoformat(sep=' ', timespec='milliseconds')
     data = msg.payload.decode("utf-8")
 
     print(f"{iso8601_time},{data}")
