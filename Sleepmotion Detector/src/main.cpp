@@ -171,8 +171,16 @@ typedef struct {
 //   Serial.println("========");
 // }
 
-void writeMQTT(sensors_event_t accel, sensors_event_t gyro) {
+String getCsvLine(sensors_event_t accel, sensors_event_t gyro) {
   String msg = "" + String(accel.acceleration.x) + "," + accel.acceleration.y + "," + accel.acceleration.z + "," + gyro.gyro.x + "," + gyro.gyro.y + "," + gyro.gyro.z;
+  return msg;
+}
+
+void writeMQTT(sensors_event_t accel, sensors_event_t gyro) {
+  mqtt_send_message("sleepsensor", getCsvLine(accel, gyro));
+}
+
+void writeMQTT(String msg) {
   mqtt_send_message("sleepsensor", msg);
 }
 
@@ -212,18 +220,45 @@ void writePlotter(sensors_event_t accel, sensors_event_t gyro) {
 }
 
 void loop() {
+  Serial.println("loop() | Begin");
+
   /* Get new sensor events with the readings */
   sensors_event_t accel, gyro, temperature;
-  mpu.getEvent(&accel, &gyro, &temperature);
 
   //mqtt_send_message("test1", "test2");
 
   mqtt_loop();
 
-  writeMQTT(accel, gyro);
+  String csvLines = "";
+  for (int i = 0; i < 200; i++) {
+    mpu.getEvent(&accel, &gyro, &temperature);
+    String csvLine = getCsvLine(accel, gyro);
+    // Note: each CSV line has a maximum size of 42 bytes:
+    // "-10.55,-10.13,-10.46,-10.01,-10.04,-10.05n"
+    // We have to consider this because the MQTT client has a maximum buffer size we cannot exceed (or have to increase it at least).
+    // Current buffer size is 10240 bytes in which fit 243.8 CSV lines.
+    csvLines += csvLine + "\n";
+  }
+  
+  writeMQTT(csvLines);
+  csvLines = "";
+
+  //writeMQTT(accel, gyro);
+
   //writeBinary(accel, gyro);
   //writeCSV(accel, gyro);
   //writePlotter(accel, gyro);
 
+  //Serial.println("loop() | Delay 100");
   //delay(100);
+
+  //Serial.println("loop() | Delay 500");
+  //delay(500);
+
+  //Serial.println("loop() | Delay 5000");
+  //delay(5000);
+  
+  //millis(1000);
+  
+  Serial.println("loop() | End");
 }

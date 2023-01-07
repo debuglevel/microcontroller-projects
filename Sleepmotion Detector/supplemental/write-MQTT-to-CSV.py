@@ -29,7 +29,7 @@ def on_message(client, userdata, msg):
     iso8601_time = datetime.now().isoformat()
     data = msg.payload.decode("utf-8")
 
-    print(f"{iso8601_time},{data}")
+    print(f"{iso8601_time},{data}", end="", flush=True)
 
 
 client = mqtt.Client()

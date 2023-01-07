@@ -31,6 +31,7 @@ void mqtt_setup() {
 
     Serial.printf("MQTT | Setting server '%s', port '%d'...\n", mqtt_server, mqtt_port);
     mqttClient.setServer(mqtt_server, mqtt_port);
+    mqttClient.setBufferSize(MQTT_MAXIMUM_PACKET_SIZE);
 
     Serial.println("MQTT | Setting callback...");
     mqttClient.setCallback(mqtt_callback);
