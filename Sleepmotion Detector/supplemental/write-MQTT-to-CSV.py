@@ -26,10 +26,14 @@ def on_message(client, userdata, msg):
     # eprint("Received message on topic " + msg.topic + ": " + str(msg.payload))
     # eprint(".", end = '', flush=True)
 
-    iso8601_time = datetime.now().isoformat(sep=' ', timespec='milliseconds')
+    iso8601_time = datetime.now().isoformat(sep=" ", timespec="milliseconds")
     data = msg.payload.decode("utf-8")
 
-    print(f"{iso8601_time},{data}", end="", flush=True)
+    # As a MQTT may contain multiple lines, prepend each  line with the timestamp.
+    # NOTE: As we add the timestamp on the client side, the milliseconds do not have too much meaning anymore.
+    #       We could interpolate, but meh.
+    for line in data.splitlines():
+        print(f"{iso8601_time},{line}", end="", flush=True)
 
 
 client = mqtt.Client()
