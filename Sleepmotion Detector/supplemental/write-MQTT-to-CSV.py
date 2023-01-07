@@ -33,7 +33,7 @@ def on_message(client, userdata, msg):
     # NOTE: As we add the timestamp on the client side, the milliseconds do not have too much meaning anymore.
     #       We could interpolate, but meh.
     for line in data.splitlines():
-        print(f"{iso8601_time},{line}", end="", flush=True)
+        print(f"{iso8601_time},{line}")
 
 
 client = mqtt.Client()
